@@ -3,6 +3,7 @@ import de.bezier.guido.*;
 public final static int NUM_ROWS = 20;
 public final static int NUM_COLS = 20;
 public final static int NUM_BOMBS = 40;
+public boolean gameOver = false;
 //Declare and initialize NUM_ROWS and NUM_COLS = 20
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> bombs = new ArrayList <MSButton>(); //ArrayList of just the minesweeper buttons that are mined
@@ -39,7 +40,10 @@ public void setBombs()
 public void draw ()
 {
   if (isWon())
+  {
+    gameOver = true;
     displayWinningMessage();
+  }
 }
 public boolean isWon()
 {
@@ -106,40 +110,45 @@ public void displayLosingMessage()
 
       public void mousePressed () 
       {
-        clicked = true;
-        if (mouseButton == RIGHT) {
-          marked = !marked;
-          if (marked == false)
-            clicked = false;
-        } else if (bombs.contains(this))
-          displayLosingMessage();
-        else if (countBombs(r, c) > 0)
-          setLabel(""+countBombs(r, c));
-        else
-        {
-          if (isValid(r, c-1) && buttons[r][c-1].isClicked()== false) {
-            buttons[r][c-1].mousePressed();
+        if(gameOver == false){
+          clicked = true;
+          if (mouseButton == RIGHT) {
+            marked = !marked;
+            if (marked == false)
+              clicked = false;
+          } else if (bombs.contains(this))
+          {
+            gameOver = true;
+            displayLosingMessage();
           }
-          if (isValid(r-1, c-1) && buttons[r-1][c-1].isClicked()== false) {
-            buttons[r-1][c-1].mousePressed();
-          }
-          if (isValid(r-1, c) && buttons[r-1][c].isClicked()== false) {
-            buttons[r-1][c].mousePressed();
-          }
-          if (isValid(r-1, c+1) && buttons[r-1][c+1].isClicked()== false) {
-            buttons[r-1][c+1].mousePressed();
-          }
-          if (isValid(r, c+1) && buttons[r][c+1].isClicked()== false) {
-            buttons[r][c+1].mousePressed();
-          }
-          if (isValid(r+1, c+1) && buttons[r+1][c+1].isClicked()== false) {
-            buttons[r+1][c+1].mousePressed();
-          }
-          if (isValid(r+1, c) && buttons[r+1][c].isClicked() == false) {
-            buttons[r+1][c].mousePressed();
-          }
-          if (isValid(r+1, c-1) && buttons[r+1][c-1].isClicked() == false) {
-            buttons[r+1][c-1].mousePressed();
+          else if (countBombs(r, c) > 0)
+            setLabel(""+countBombs(r, c));
+          else
+          {
+            if (isValid(r, c-1) && buttons[r][c-1].isClicked()== false) {
+              buttons[r][c-1].mousePressed();
+            }
+            if (isValid(r-1, c-1) && buttons[r-1][c-1].isClicked()== false) {
+              buttons[r-1][c-1].mousePressed();
+            }
+            if (isValid(r-1, c) && buttons[r-1][c].isClicked()== false) {
+              buttons[r-1][c].mousePressed();
+            }
+            if (isValid(r-1, c+1) && buttons[r-1][c+1].isClicked()== false) {
+              buttons[r-1][c+1].mousePressed();
+            }
+            if (isValid(r, c+1) && buttons[r][c+1].isClicked()== false) {
+              buttons[r][c+1].mousePressed();
+            }
+            if (isValid(r+1, c+1) && buttons[r+1][c+1].isClicked()== false) {
+              buttons[r+1][c+1].mousePressed();
+            }
+            if (isValid(r+1, c) && buttons[r+1][c].isClicked() == false) {
+              buttons[r+1][c].mousePressed();
+            }
+            if (isValid(r+1, c-1) && buttons[r+1][c-1].isClicked() == false) {
+              buttons[r+1][c-1].mousePressed();
+            }
           }
         }
       }
